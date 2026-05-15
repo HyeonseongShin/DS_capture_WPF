@@ -156,7 +156,7 @@ public partial class MainWindow : Window
                 {
                     using var bmp = BitmapHelper.LoadBitmap(path);
                     bmp.SetResolution(96, 96);
-                    thumb = BitmapHelper.ToBitmapSource(bmp, Math.Min(160.0 / bmp.Width, 120.0 / bmp.Height));
+                    thumb = BitmapHelper.ToBitmapSource(bmp, Math.Min(600.0 / bmp.Width, 450.0 / bmp.Height));
                 }
                 catch { }
                 return new ThumbnailItem(path, Path.GetFileName(path), thumb);

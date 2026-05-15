@@ -1,2 +1,9 @@
 *.png
 dist_production/
+
+# .NET / Visual Studio
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+crash_*.txt

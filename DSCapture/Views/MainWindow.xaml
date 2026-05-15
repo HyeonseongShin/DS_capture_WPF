@@ -30,8 +30,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="220"/>
         </Grid.ColumnDefinitions>
 
         <!-- 좌측: 캡처 모드 버튼 -->
@@ -105,7 +105,7 @@
                         <DataTemplate>
                             <Border Background="#2f3542" Margin="0,4" Padding="4">
                                 <StackPanel>
-                                    <Image x:Name="ThumbImage" Width="160" Height="120"
+                                    <Image x:Name="ThumbImage"
                                            Stretch="Uniform" Cursor="Hand"
                                            Source="{Binding Thumb}"
                                            MouseLeftButtonDown="OnThumbClick"
