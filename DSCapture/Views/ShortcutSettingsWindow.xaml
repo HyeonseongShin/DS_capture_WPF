@@ -1,0 +1,41 @@
+<Window x:Class="DSCapture.Views.ShortcutSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="단축키 설정" Width="420" Height="360"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <StackPanel Margin="20">
+        <!-- 지정크기 캡처 -->
+        <GroupBox Header="지정크기 캡처" Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal" Margin="8">
+                <CheckBox x:Name="FixedCtrl"  Content="Ctrl"  VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <CheckBox x:Name="FixedAlt"   Content="Alt"   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <CheckBox x:Name="FixedShift" Content="Shift" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox x:Name="FixedKey" Width="70" VerticalAlignment="Center"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 자유 드래그 -->
+        <GroupBox Header="자유 드래그 캡처" Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal" Margin="8">
+                <CheckBox x:Name="DragCtrl"  Content="Ctrl"  VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <CheckBox x:Name="DragAlt"   Content="Alt"   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <CheckBox x:Name="DragShift" Content="Shift" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox x:Name="DragKey" Width="70" VerticalAlignment="Center"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 전체화면 캡처 -->
+        <GroupBox Header="전체화면 캡처" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal" Margin="8">
+                <CheckBox x:Name="FullCtrl"  Content="Ctrl"  VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <CheckBox x:Name="FullAlt"   Content="Alt"   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <CheckBox x:Name="FullShift" Content="Shift" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox x:Name="FullKey" Width="70" VerticalAlignment="Center"/>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Content="단축키 적용 및 저장" Click="OnSaveClick"
+                Background="#2f3542" Foreground="White" Padding="0,10"
+                BorderThickness="0" Cursor="Hand" FontWeight="Bold"/>
+    </StackPanel>
+</Window>

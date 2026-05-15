@@ -1,0 +1,124 @@
+<Window x:Class="DSCapture.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="580" Height="480" MinWidth="580" MinHeight="480"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="CaptureBtn" TargetType="Button">
+            <Setter Property="Background" Value="#2f3542"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="0,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="OptionBtn" TargetType="Button" BasedOn="{StaticResource CaptureBtn}">
+            <Setter Property="Background" Value="#4b6584"/>
+            <Setter Property="Padding" Value="0,10"/>
+        </Style>
+        <Style x:Key="RatioBtn" TargetType="Button">
+            <Setter Property="Background" Value="#4b6584"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="220"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 좌측: 캡처 모드 버튼 -->
+        <StackPanel Grid.Column="0" Margin="40,20">
+            <TextBlock Text="CAPTURE MODES" Foreground="#00d2d3"
+                       FontSize="11" FontWeight="Bold" FontFamily="Arial"
+                       HorizontalAlignment="Center" Margin="0,0,0,12"/>
+
+            <Button Content="지정크기 캡처" Style="{StaticResource CaptureBtn}"
+                    Click="OnFixedCapture" Margin="0,0,0,2"/>
+
+            <!-- 크기 입력 -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                        Margin="0,0,0,16">
+                <TextBox x:Name="TxtWidth" Width="55" TextAlignment="Center"
+                         FontSize="11" Text="800" Padding="2"/>
+                <TextBlock Text=" × " VerticalAlignment="Center"
+                           Foreground="#a4b0be" FontWeight="Bold"/>
+                <TextBox x:Name="TxtHeight" Width="55" TextAlignment="Center"
+                         FontSize="11" Text="600" Padding="2"/>
+            </StackPanel>
+
+            <Button Content="자유 드래그 캡처" Style="{StaticResource CaptureBtn}"
+                    Click="OnDragCapture" Margin="0,0,0,2"/>
+
+            <!-- 비율 선택 -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/><ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="BtnRatio43" Content="4:3 비율" Grid.Column="0"
+                        Style="{StaticResource RatioBtn}" Click="OnRatio43"
+                        Margin="0,0,2,0"/>
+                <Button x:Name="BtnRatio169" Content="16:9 비율" Grid.Column="1"
+                        Style="{StaticResource RatioBtn}" Click="OnRatio169"
+                        Margin="2,0,0,0"/>
+            </Grid>
+
+            <Button Content="전체 화면 캡처" Style="{StaticResource CaptureBtn}"
+                    Click="OnFullCapture" Margin="0,0,0,20"/>
+
+            <Button Content="⚙ 환경설정 (SETTINGS)" Style="{StaticResource OptionBtn}"
+                    Click="OnSettings"/>
+        </StackPanel>
+
+        <!-- 우측: 최근 캡처 목록 -->
+        <DockPanel Grid.Column="1" Background="#1e272e">
+            <TextBlock DockPanel.Dock="Top" Text="최근 캡처 목록"
+                       Foreground="#00d2d3" FontFamily="Malgun Gothic"
+                       FontSize="11" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,16,0,8"/>
+
+            <!-- 하단 버튼 -->
+            <StackPanel DockPanel.Dock="Bottom" Margin="10,0,10,12">
+                <TextBlock Text="※ 더블클릭 시 이미지 수정" Foreground="#a4b0be"
+                           FontSize="9" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                <Button Content="모두 지우기" Click="OnClearAll"
+                        Background="#e84118" Foreground="White" FontWeight="Bold"
+                        BorderThickness="0" Padding="0,5" Cursor="Hand"
+                        FontFamily="Malgun Gothic" Margin="0,0,0,4"/>
+                <Button Content="다른 폴더에 모두 저장" Click="OnSaveAllAs"
+                        Background="#0097e6" Foreground="White" FontWeight="Bold"
+                        BorderThickness="0" Padding="0,5" Cursor="Hand"
+                        FontFamily="Malgun Gothic"/>
+            </StackPanel>
+
+            <!-- 썸네일 목록 -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="ThumbnailList" Margin="8,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#2f3542" Margin="0,4" Padding="4">
+                                <StackPanel>
+                                    <Image x:Name="ThumbImage" Width="160" Height="120"
+                                           Stretch="Uniform" Cursor="Hand"
+                                           MouseLeftButtonDown="OnThumbClick"
+                                           MouseRightButtonDown="OnThumbRightClick"
+                                           Tag="{Binding Path}"/>
+                                    <TextBlock Text="{Binding Name}" Foreground="White"
+                                               FontSize="9" HorizontalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Window>

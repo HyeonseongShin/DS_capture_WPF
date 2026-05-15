@@ -1,0 +1,153 @@
+<Window x:Class="DSCapture.Views.ImageEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="900" Height="650" WindowStartupLocation="CenterScreen"
+        Background="#1e272e">
+    <Window.Resources>
+        <Style x:Key="ToolbarBtn" TargetType="Button">
+            <Setter Property="Background" Value="#485460"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="2,0"/>
+        </Style>
+        <Style x:Key="DrawingToolBtn" TargetType="ToggleButton">
+            <Setter Property="Background" Value="#718093"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#0fbcf9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- 1행: 파일/편집 버튼 -->
+        <Border DockPanel.Dock="Top" Background="#1e272e" Padding="12,8">
+            <DockPanel>
+                <Button Content="💾 저장"         Style="{StaticResource ToolbarBtn}" Click="OnSave"/>
+                <Button Content="📁 다른이름저장"  Style="{StaticResource ToolbarBtn}" Click="OnSaveAs"/>
+                <Button Content="📋 클립보드"      Style="{StaticResource ToolbarBtn}" Click="OnCopyClipboard"/>
+                <Separator Background="#808e9b" Width="1" Margin="10,4"/>
+                <Button Content="↩ 실행취소"       Style="{StaticResource ToolbarBtn}" Click="OnUndo"/>
+                <Button Content="↪ 재실행"         Style="{StaticResource ToolbarBtn}" Click="OnRedo"/>
+                <Separator Background="#808e9b" Width="1" Margin="10,4"/>
+                <Button Content="↺ 90°"            Style="{StaticResource ToolbarBtn}" Click="OnRotateCCW"/>
+                <Button Content="↻ 90°"            Style="{StaticResource ToolbarBtn}" Click="OnRotateCW"/>
+                <Button Content="↔ 좌우반전"        Style="{StaticResource ToolbarBtn}" Click="OnFlipH"/>
+                <Button Content="↕ 상하반전"        Style="{StaticResource ToolbarBtn}" Click="OnFlipV"/>
+                <TextBlock x:Name="SizeLabel" Foreground="#00d8d6" FontSize="11" FontWeight="Bold"
+                           VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="10,0"/>
+            </DockPanel>
+        </Border>
+
+        <!-- 2행: 도구 선택 -->
+        <Border DockPanel.Dock="Top" Background="#2f3640" Padding="12,10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="도구:" Foreground="#d2dae2" FontFamily="Malgun Gothic"
+                           FontSize="10" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ToggleButton x:Name="BtnPen"       Content="펜"     Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="pen"/>
+                <ToggleButton x:Name="BtnLine"      Content="직선"   Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="line"/>
+                <ToggleButton x:Name="BtnArrow"     Content="화살표" Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="arrow"/>
+                <ToggleButton x:Name="BtnRect"      Content="사각형" Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="rect"/>
+                <ToggleButton x:Name="BtnEllipse"   Content="원"     Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="ellipse"/>
+                <ToggleButton x:Name="BtnText"      Content="텍스트" Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="text"/>
+                <ToggleButton x:Name="BtnHighlight" Content="형광펜" Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="highlight"/>
+                <ToggleButton x:Name="BtnMosaic"    Content="모자이크" Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="mosaic"/>
+                <ToggleButton x:Name="BtnCrop"      Content="자르기" Style="{StaticResource DrawingToolBtn}" Checked="OnToolChecked" Tag="crop"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 3행: 색상/두께/채우기/글꼴 -->
+        <Border DockPanel.Dock="Top" Background="#1e272e" Padding="12,10">
+            <StackPanel Orientation="Horizontal">
+                <!-- 선 색상 -->
+                <TextBlock Text="선 색상:" Foreground="#d2dae2" FontSize="10" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="0,0,6,0" FontFamily="Malgun Gothic"/>
+                <ItemsControl x:Name="ColorPalette">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="18" Height="18" BorderThickness="1"
+                                    Background="{Binding}" Cursor="Hand" Margin="2,0"
+                                    Click="OnPaletteClick" Tag="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="⊕" Style="{StaticResource ToolbarBtn}" Padding="6,4" Click="OnPickColor"/>
+                <Border x:Name="ColorIndicator" Width="18" Height="18" BorderThickness="1"
+                        BorderBrush="White" Background="Red" Margin="4,0"/>
+
+                <Separator Background="#808e9b" Width="1" Margin="10,4"/>
+
+                <!-- 선 두께 -->
+                <TextBlock Text="선 두께:" Foreground="#d2dae2" FontSize="10" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="0,0,6,0" FontFamily="Malgun Gothic"/>
+                <TextBox x:Name="LineWidthBox" Width="40" Text="5" TextAlignment="Center"
+                         VerticalAlignment="Center" FontSize="11"/>
+
+                <Separator Background="#808e9b" Width="1" Margin="10,4"/>
+
+                <!-- 채우기 -->
+                <CheckBox x:Name="FillCheck" Content="채우기" Foreground="#d2dae2"
+                          FontFamily="Malgun Gothic" FontSize="10" FontWeight="Bold"
+                          VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <ItemsControl x:Name="FillColorPalette">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="18" Height="18" BorderThickness="1"
+                                    Background="{Binding}" Cursor="Hand" Margin="2,0"
+                                    Click="OnFillPaletteClick" Tag="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="⊕" Style="{StaticResource ToolbarBtn}" Padding="6,4" Click="OnPickFillColor"/>
+                <Border x:Name="FillColorIndicator" Width="18" Height="18" BorderThickness="1"
+                        BorderBrush="White" Background="Red" Margin="4,0"/>
+
+                <Separator Background="#808e9b" Width="1" Margin="10,4"/>
+
+                <!-- 글꼴 -->
+                <TextBlock Text="글꼴:" Foreground="#d2dae2" FontSize="10" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="0,0,6,0" FontFamily="Malgun Gothic"/>
+                <ComboBox x:Name="FontFamilyBox" Width="120" VerticalAlignment="Center"
+                          FontSize="10">
+                    <ComboBoxItem Content="Malgun Gothic"/>
+                    <ComboBoxItem Content="Arial"/>
+                    <ComboBoxItem Content="Consolas"/>
+                    <ComboBoxItem Content="Impact"/>
+                </ComboBox>
+                <TextBlock Text="크기:" Foreground="#d2dae2" FontSize="10" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="8,0,4,0" FontFamily="Malgun Gothic"/>
+                <TextBox x:Name="FontSizeBox" Width="40" Text="20" TextAlignment="Center"
+                         VerticalAlignment="Center" FontSize="11"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 이미지 캔버스 -->
+        <Canvas x:Name="DrawingCanvas" Background="#2f3640" ClipToBounds="True"
+                Cursor="Crosshair"
+                MouseLeftButtonDown="OnCanvasMouseDown"
+                MouseMove="OnCanvasMouseMove"
+                MouseLeftButtonUp="OnCanvasMouseUp">
+            <Image x:Name="DisplayImage" Canvas.Left="0" Canvas.Top="0" Stretch="None"/>
+        </Canvas>
+    </DockPanel>
+</Window>
