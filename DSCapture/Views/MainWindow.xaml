@@ -107,6 +107,7 @@
                                 <StackPanel>
                                     <Image x:Name="ThumbImage" Width="160" Height="120"
                                            Stretch="Uniform" Cursor="Hand"
+                                           Source="{Binding Thumb}"
                                            MouseLeftButtonDown="OnThumbClick"
                                            MouseRightButtonDown="OnThumbRightClick"
                                            Tag="{Binding Path}"/>

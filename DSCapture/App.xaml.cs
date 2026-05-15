@@ -11,6 +11,7 @@ namespace DSCapture;
 public partial class App : Application
 {
     private static Mutex? _mutex;
+    public static readonly int WM_SHOWME = NativeMethods.RegisterWindowMessage("WM_SHOWME_DSCAPTURE");
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -54,8 +55,7 @@ public partial class App : Application
             NativeMethods.GetWindowText(hwnd, title, 256);
             if (title.ToString().StartsWith("DS Capture"))
             {
-                NativeMethods.ShowWindow(hwnd, NativeMethods.SW_RESTORE);
-                NativeMethods.SetForegroundWindow(hwnd);
+                NativeMethods.PostMessage(hwnd, WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
                 return false;
             }
             return true;

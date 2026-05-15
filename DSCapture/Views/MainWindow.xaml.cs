@@ -69,6 +69,23 @@ public partial class MainWindow : Window
         if (startHidden) Hide();
     }
 
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        var source = System.Windows.PresentationSource.FromVisual(this) as System.Windows.Interop.HwndSource;
+        source?.AddHook(WndProc);
+    }
+
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (msg == App.WM_SHOWME)
+        {
+            ShowMainWindow();
+            handled = true;
+        }
+        return IntPtr.Zero;
+    }
+
     // ── 단축키 적용 ───────────────────────────────────────────
     private void ApplyShortcuts()
     {
@@ -246,6 +263,8 @@ public partial class MainWindow : Window
     private void ShowMainWindow()
     {
         Show();
+        if (WindowState == WindowState.Minimized)
+            WindowState = WindowState.Normal;
         Activate();
     }
 

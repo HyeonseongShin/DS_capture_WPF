@@ -21,6 +21,13 @@ internal static class NativeMethods
     [DllImport("user32.dll")]
     public static extern bool SetForegroundWindow(IntPtr hwnd);
 
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern int RegisterWindowMessage(string lpString);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern bool PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+
     // 전역 단축키
     [DllImport("user32.dll")]
     public static extern bool RegisterHotKey(IntPtr hwnd, int id, uint fsModifiers, uint vk);
