@@ -1,4 +1,4 @@
-# DS Capture WPF 빌드 스크립트
+﻿# DS Capture WPF 빌드 스크립트
 # Python build.py 에 대응하는 PowerShell 버전
 #
 # 사용법:
@@ -79,3 +79,4 @@ foreach ($t in $cleanTargets) {
 
 Write-Host "`n[SUCCESS] 빌드 완료!" -ForegroundColor Green
 Write-Host "결과물: $OutputDir\$ExeName" -ForegroundColor Green
+

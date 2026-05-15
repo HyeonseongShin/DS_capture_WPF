@@ -112,8 +112,7 @@ public partial class SettingsWindow : Window
             @"Software\Microsoft\Windows\CurrentVersion\Run", writable: true);
         if (enable)
         {
-            string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location
-                .Replace(".dll", ".exe");
+            string exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
             key?.SetValue("DSCapture", $"\"{exePath}\" --startup");
         }
         else

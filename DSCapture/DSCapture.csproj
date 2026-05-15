@@ -3,10 +3,10 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\DS_capture.ico</ApplicationIcon>
     <AssemblyTitle>DS Capture</AssemblyTitle>
     <AssemblyName>DS Capture</AssemblyName>
     <RootNamespace>DSCapture</RootNamespace>
@@ -19,6 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\icon.ico" />
+    <Resource Include="Resources\DS_capture.ico" />
   </ItemGroup>
 </Project>

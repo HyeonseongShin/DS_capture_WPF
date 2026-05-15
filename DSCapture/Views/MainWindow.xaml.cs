@@ -287,9 +287,14 @@ public partial class MainWindow : Window
 
     private static System.Drawing.Icon LoadTrayIcon()
     {
-        string iconPath = Path.Combine(AppContext.BaseDirectory, "Resources", "icon.ico");
-        if (File.Exists(iconPath))
-            return new System.Drawing.Icon(iconPath);
+        try
+        {
+            var uri = new Uri("pack://application:,,,/Resources/DS_capture.ico");
+            var streamInfo = Application.GetResourceStream(uri);
+            if (streamInfo != null)
+                return new System.Drawing.Icon(streamInfo.Stream);
+        }
+        catch { }
 
         // 아이콘이 없으면 단색 아이콘 동적 생성
         using var bmp = new System.Drawing.Bitmap(16, 16);

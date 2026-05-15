@@ -34,9 +34,7 @@ public partial class ImageEditorWindow : Window
     private System.Drawing.Color _drawColor  = System.Drawing.Color.Red;
     private System.Drawing.Color _fillColor  = System.Drawing.Color.Red;
     private bool _useFill = false;
-    private int _lineWidth = 5;
     private string _fontFamily = "Malgun Gothic";
-    private int _fontSize = 20;
 
     // 드로잉 상태
     private double _scale = 1.0;
@@ -507,7 +505,7 @@ public partial class ImageEditorWindow : Window
 
     // ══ 헬퍼 ═════════════════════════════════════════════════
     private static WColor ParseWColor(string hex)
-        => (WColor)ColorConverter.ConvertFromString(hex);
+        => (WColor)System.Windows.Media.ColorConverter.ConvertFromString(hex);
 
     private static System.Drawing.Color WColorToGdi(WColor c)
         => System.Drawing.Color.FromArgb(c.A, c.R, c.G, c.B);
