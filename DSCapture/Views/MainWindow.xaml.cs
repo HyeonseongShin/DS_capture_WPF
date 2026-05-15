@@ -21,6 +21,7 @@ public partial class MainWindow : Window
     private const string AppVersion = "v1.00";
 
     private readonly AppSettings _settings;
+    internal AppSettings AppSettings => _settings;
     private readonly SettingsService _settingsService;
     private readonly CaptureService _captureService;
     private readonly HotkeyService _hotkeyService;

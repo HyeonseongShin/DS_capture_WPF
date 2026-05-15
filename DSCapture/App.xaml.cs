@@ -17,6 +17,16 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        AppDomain.CurrentDomain.UnhandledException += (s, args) =>
+        {
+            System.IO.File.WriteAllText("crash_appdomain.txt", args.ExceptionObject.ToString());
+        };
+        this.DispatcherUnhandledException += (s, args) =>
+        {
+            System.IO.File.WriteAllText("crash_dispatcher.txt", args.Exception.ToString());
+            args.Handled = true;
+        };
+
         // DPI 인식 설정
         try { NativeMethods.SetProcessDpiAwareness(1); } catch { }
 

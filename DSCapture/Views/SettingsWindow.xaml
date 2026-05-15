@@ -31,6 +31,8 @@
                     Click="OnShortcutClick" Margin="0,0,0,4"/>
             <Button Content="저장 위치 지정" Style="{StaticResource SettingBtn}"
                     Click="OnSaveDirClick" Margin="0,0,0,4"/>
+            <TextBlock x:Name="CurrentSaveDirLabel" Foreground="#00d2d3" FontSize="10" 
+                       Margin="4,0,0,10" TextWrapping="Wrap"/>
             <Button Content="저장 폴더 열기" Style="{StaticResource SettingBtn}"
                     Click="OnOpenFolderClick"/>
 

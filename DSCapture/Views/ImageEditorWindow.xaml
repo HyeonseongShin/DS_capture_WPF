@@ -143,7 +143,7 @@
 
         <!-- 이미지 캔버스 -->
         <Canvas x:Name="DrawingCanvas" Background="#2f3640" ClipToBounds="True"
-                Cursor="Crosshair"
+                Cursor="Cross"
                 MouseLeftButtonDown="OnCanvasMouseDown"
                 MouseMove="OnCanvasMouseMove"
                 MouseLeftButtonUp="OnCanvasMouseUp">

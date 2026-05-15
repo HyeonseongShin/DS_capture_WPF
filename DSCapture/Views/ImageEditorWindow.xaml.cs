@@ -448,7 +448,7 @@ public partial class ImageEditorWindow : Window
         {
             Filter = "PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg|모든 파일|*.*",
             DefaultExt = ".png",
-            InitialDirectory = Path.GetDirectoryName(_filepath)
+            InitialDirectory = _mainApp.AppSettings.SaveDir
         };
         if (dlg.ShowDialog() != true) return;
         SaveToPath(dlg.FileName);

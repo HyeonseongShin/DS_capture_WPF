@@ -30,6 +30,7 @@ public partial class SettingsWindow : Window
         BuildLabel.Text = $"Build: {BuildDate}";
 
         RefreshButtons();
+        CurrentSaveDirLabel.Text = _settings.SaveDir;
     }
 
     private void RefreshButtons()
@@ -77,6 +78,7 @@ public partial class SettingsWindow : Window
         {
             _settings.SaveDir = dlg.SelectedPath;
             _settingsService.Save(_settings);
+            CurrentSaveDirLabel.Text = _settings.SaveDir;
         }
     }
 

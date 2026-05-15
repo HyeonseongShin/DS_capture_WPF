@@ -38,7 +38,11 @@ internal static class BitmapHelper
     public static Drawing.Bitmap LoadBitmap(string path)
     {
         using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        return new Drawing.Bitmap(fs);
+        using var temp = new Drawing.Bitmap(fs);
+        var result = new Drawing.Bitmap(temp.Width, temp.Height, Drawing.Imaging.PixelFormat.Format32bppPArgb);
+        using var g = Drawing.Graphics.FromImage(result);
+        g.DrawImage(temp, 0, 0, temp.Width, temp.Height);
+        return result;
     }
 
     /// <summary>Bitmap 밝기 조정 (0.0 ~ 1.0, 1.0 = 원본)</summary>
